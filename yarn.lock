@@ -1594,6 +1594,10 @@ crypto-token@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/crypto-token/-/crypto-token-1.0.1.tgz#27c6482faf3b63c2f5da11577f8304346fe797a5"
 
+cryptocompare@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/cryptocompare/-/cryptocompare-0.3.0.tgz#5bd2cfa5ea81fa9194abf5c6209cc3bc96cd8d1a"
+
 csrf@~3.0.0:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/csrf/-/csrf-3.0.6.tgz#b61120ddceeafc91e76ed5313bb5c0b2667b710a"

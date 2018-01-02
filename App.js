@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, ListView, Text, View, ActivityIndicator } from 'react-native';
 import Services from 'binancesdk';
+import cc from 'cryptocompare';
 let Configs = require('./configs/Configs');
 
 export default class App extends React.Component {
@@ -13,14 +14,35 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.allBookTickers();
+
+    cc.topPairs('BTC', 1000)
+    .then(pairs => {
+      if (pairs) {
+        console.log(pairs.length);
+        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.setState({
+          isLoading: false,
+          dataSource: ds.cloneWithRows(pairs),
+        }, function () {
+          // do something with new state
+        });
+      } else {
+        this.setState({
+          isLoading: true
+        }, function () {
+          // do something with new state
+        });
+      }
+    })
+    .catch(console.error)
+
+    // this.allBookTickers();
   }
 
   allBookTickers() {
     
     let accountInfo = this.services.allBookTickers();
     accountInfo.then((responseJson) => {
-
       if (responseJson) {
         console.log(responseJson.length);
         let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
