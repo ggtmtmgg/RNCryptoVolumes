@@ -1,74 +1,162 @@
-import React, { Component } from 'react';
-import { Pie } from 'react-native-pathjs-charts';
-import { AppRegistry, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, ListView, Text, View, ActivityIndicator } from 'react-native';
+import Services from 'binancesdk';
+let Configs = require('./configs/Configs');
 
-class Greeting extends Component {
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.services = new Services(Configs);
+    this.state = {
+      isLoading: true
+    }
+  }
+
+  componentDidMount() {
+    // this.testConnectivity();
+    this.allBookTickers();
+  }
+
+  testConnectivity() {
+
+ 
+    let test = this.services.test();
+
+    test.then((responseJson) => {
+
+      if (responseJson) {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson,
+        }, function () {
+          // do something with new state
+        });
+      } else {
+        this.setState({
+          isLoading: true
+        }, function () {
+          // do something with new state
+        });
+      }
+
+    })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  loadAccountInfo() {
+    
+    let accountInfo = this.services.accountInfo();
+
+    accountInfo.then((responseJson) => {
+
+      if (responseJson) {
+        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.setState({
+          isLoading: false,
+          dataSource: ds.cloneWithRows(responseJson.balances),
+        }, function () {
+          // do something with new state
+        });
+      } else {
+        this.setState({
+          isLoading: true
+        }, function () {
+          // do something with new state
+        });
+      }
+
+    })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  allPricesTickers() {
+    
+    let accountInfo = this.services.allPricesTickers();
+
+    accountInfo.then((responseJson) => {
+
+      if (responseJson) {
+        console.log(responseJson)
+        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.setState({
+          isLoading: false,
+          dataSource: ds.cloneWithRows(responseJson),
+        }, function () {
+          // do something with new state
+        });
+      } else {
+        this.setState({
+          isLoading: true
+        }, function () {
+          // do something with new state
+        });
+      }
+
+    })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+
+  allBookTickers() {
+    
+    let accountInfo = this.services.allBookTickers();
+    accountInfo.then((responseJson) => {
+
+      if (responseJson) {
+        console.log(responseJson)
+        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.setState({
+          isLoading: false,
+          dataSource: ds.cloneWithRows(responseJson),
+        }, function () {
+          // do something with new state
+        });
+      } else {
+        this.setState({
+          isLoading: true
+        }, function () {
+          // do something with new state
+        });
+      }
+
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+
   render() {
+
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
+
     return (
-      <Text>Hello {this.props.name}!</Text>
+      <View style={styles.container}>
+        <Text> testing </Text>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => <Text>{rowData.symbol}, {rowData.askPrice}</Text>}
+        />
+      </View>
     );
   }
 }
 
-export default class LotsOfGreetings extends Component {
-  render() {
-    let pieData = [{
-      "name": "BTC",
-      "population": 7694980
-    }, {
-      "name": "ETH",
-      "population": 2584160
-    }, {
-      "name": "TRIG",
-      "population": 6590667
-    }
-    ]
-
-    let pieOptions = {
-      color: '#2980B9',
-      r: 50,
-      R: 150,
-      legendPosition: 'topLeft',
-      animate: {
-        type: 'oneByOne',
-        duration: 200,
-        fillTransition: 3
-      },
-      label: {
-        fontFamily: 'Arial',
-        fontSize: 15,
-        fontWeight: true,
-        color: '#ECF0F1'
-      }
-    }
-
-    let pieStyle = {
-    }
-
-    let textStyle = {
-      fontSize: 40,
-      marginTop: 100,
-      textAlign: 'center'
-    }
-
-    let amount = '24.2BTC' // TODO
-
-    return (
-      <View>
-        <Text
-          style={textStyle} >
-          残高: {amount}
-        </Text>
-
-        <Pie
-          data={pieData}
-          options={pieOptions}
-          style={pieStyle}
-          accessorKey="population" />
-      </View>
-    )
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 20,
   }
-}
-
-// skip this line if using Create React Native App
-AppRegistry.registerComponent('AwesomeProject', () => LotsOfGreetings);
+});
