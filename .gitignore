@@ -223,3 +223,6 @@ typings/
 
 
 # End of https://www.gitignore.io/api/reactnative
+
+### secure ###
+configs/Configs.js
