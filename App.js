@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, ListView, Text, View, ActivityIndicator } from 'react-native';
-import { List, ListItem } from 'react-native-elements'
+import { Button, List, ListItem } from 'react-native-elements'
 import Services from 'binancesdk';
 import cc from 'cryptocompare';
 let Configs = require('./configs/Configs');
@@ -96,6 +96,12 @@ export default class App extends React.Component {
             }
           </List>
         </ScrollView>
+        <Button
+          raised
+          buttonStyle={{backgroundColor: 'green', borderRadius: 10}}
+          textStyle={{textAlign: 'center'}}
+          title={"更新"}
+        />
       </View>
     );
   }
