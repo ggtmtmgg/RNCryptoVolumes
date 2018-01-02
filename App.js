@@ -13,95 +13,8 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    // this.testConnectivity();
     this.allBookTickers();
   }
-
-  testConnectivity() {
-
- 
-    let test = this.services.test();
-
-    test.then((responseJson) => {
-
-      if (responseJson) {
-        this.setState({
-          isLoading: false,
-          dataSource: responseJson,
-        }, function () {
-          // do something with new state
-        });
-      } else {
-        this.setState({
-          isLoading: true
-        }, function () {
-          // do something with new state
-        });
-      }
-
-    })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  loadAccountInfo() {
-    
-    let accountInfo = this.services.accountInfo();
-
-    accountInfo.then((responseJson) => {
-
-      if (responseJson) {
-        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-        this.setState({
-          isLoading: false,
-          dataSource: ds.cloneWithRows(responseJson.balances),
-        }, function () {
-          // do something with new state
-        });
-      } else {
-        this.setState({
-          isLoading: true
-        }, function () {
-          // do something with new state
-        });
-      }
-
-    })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  allPricesTickers() {
-    
-    let accountInfo = this.services.allPricesTickers();
-
-    accountInfo.then((responseJson) => {
-
-      if (responseJson) {
-        console.log(responseJson)
-        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-        this.setState({
-          isLoading: false,
-          dataSource: ds.cloneWithRows(responseJson),
-        }, function () {
-          // do something with new state
-        });
-      } else {
-        this.setState({
-          isLoading: true
-        }, function () {
-          // do something with new state
-        });
-      }
-
-    })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
 
   allBookTickers() {
     
@@ -109,7 +22,7 @@ export default class App extends React.Component {
     accountInfo.then((responseJson) => {
 
       if (responseJson) {
-        console.log(responseJson)
+        console.log(responseJson.length);
         let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.setState({
           isLoading: false,
