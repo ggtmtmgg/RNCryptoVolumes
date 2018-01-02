@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, ListView, Text, View, ActivityIndicator } from 
 import { Button, List, ListItem } from 'react-native-elements'
 import Services from 'binancesdk';
 import cc from 'cryptocompare';
+import Spinner from 'react-native-loading-spinner-overlay';
+
 let Configs = require('./configs/Configs');
 
 export default class App extends React.Component {
@@ -10,13 +12,19 @@ export default class App extends React.Component {
     super(props);
     this.services = new Services(Configs);
     this.state = {
-      isLoading: true,
+      isLoading: false,
       list: [],
     }
   }
 
   componentDidMount() {
+    this.allPairs();
+    // this.allBookTickers();
+  }
 
+  allPairs() {
+    if (this.state.isLoading) return;
+    this.setState({ isLoading: true });
     cc.topPairs('BTC', 1000)
     .then(pairs => {
       if (pairs) {
@@ -37,8 +45,6 @@ export default class App extends React.Component {
       }
     })
     .catch(console.error)
-
-    // this.allBookTickers();
   }
 
   allBookTickers() {
@@ -70,17 +76,10 @@ export default class App extends React.Component {
 
 
   render() {
-
-    if (this.state.isLoading) {
-      return (
-        <View style={styles.container}>
-          <ActivityIndicator />
-        </View>
-      );
-    }
-
     return (
       <View style={styles.container}>
+        <Spinner visible={this.state.isLoading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+
         <Text> testing </Text>
         <ScrollView>
           <List>
@@ -96,9 +95,13 @@ export default class App extends React.Component {
             }
           </List>
         </ScrollView>
+
         <Button
           raised
           buttonStyle={{backgroundColor: 'green', borderRadius: 10}}
+          onPress={() => {
+            this.allPairs();
+          }}
           textStyle={{textAlign: 'center'}}
           title={"更新"}
         />
