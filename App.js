@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, ListView, Text, View, ActivityIndicator } from 'react-native';
+import { ScrollView, StyleSheet, ListView, Text, View, ActivityIndicator } from 'react-native';
+import { List, ListItem } from 'react-native-elements'
 import Services from 'binancesdk';
 import cc from 'cryptocompare';
 let Configs = require('./configs/Configs');
@@ -9,7 +10,8 @@ export default class App extends React.Component {
     super(props);
     this.services = new Services(Configs);
     this.state = {
-      isLoading: true
+      isLoading: true,
+      list: [],
     }
   }
 
@@ -22,7 +24,7 @@ export default class App extends React.Component {
         let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.setState({
           isLoading: false,
-          dataSource: ds.cloneWithRows(pairs),
+          list: pairs
         }, function () {
           // do something with new state
         });
@@ -80,10 +82,20 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Text> testing </Text>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={(rowData) => <Text>{rowData.symbol}, {rowData.askPrice}</Text>}
-        />
+        <ScrollView>
+          <List>
+            {
+              this.state.list.map((item, i) => (
+                <ListItem
+                  key={i}
+                  title={item.toSymbol}
+                  subtitle={"出来高:" + item.volume24h + "BTC"}
+                  avatar={{uri:"https://dummyimage.com/600x400/000/ffffff&text=" + (i+1) + "位"}}
+                />
+              ))
+            }
+          </List>
+        </ScrollView>
       </View>
     );
   }

@@ -24,6 +24,7 @@
     "expo": "^23.0.4",
     "react": "16.0.0",
     "react-native": "0.50.3",
+    "react-native-elements": "^0.18.5",
     "react-native-pathjs-charts": "^0.0.33"
   }
 }
