@@ -13,7 +13,7 @@ export default class App extends React.Component {
     this.services = new Services(Configs);
     this.state = {
       isLoading: false,
-      list: [],
+      dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }).cloneWithRows([]),
     }
   }
 
@@ -25,14 +25,13 @@ export default class App extends React.Component {
   allPairs() {
     if (this.state.isLoading) return;
     this.setState({ isLoading: true });
-    cc.topPairs('BTC', 1000)
-    .then(pairs => {
+    cc.topPairs('BTC', 50).then(pairs => {
       if (pairs) {
-        console.log(pairs.length);
+        // console.log(pairs);
         let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.setState({
           isLoading: false,
-          list: pairs
+          dataSource: ds.cloneWithRows(pairs),
         }, function () {
           // do something with new state
         });
@@ -74,27 +73,37 @@ export default class App extends React.Component {
     });
   }
 
+  renderRow (rowData, sectionID, rowID) {
+    console.log(rowData);
+    return (
+      <ListItem
+        key={sectionID}
+        title={rowData.toSymbol}
+        subtitle={"出来高:" + rowData.volume24h + "BTC"}
+        avatar={{uri:"https://dummyimage.com/600x400/000/ffffff&text=" + (parseInt(rowID)+1) + "位"}}
+      />
+    )
+  }
+
 
   render() {
     return (
       <View style={styles.container}>
         <Spinner visible={this.state.isLoading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
 
-        <Text> testing </Text>
-        <ScrollView>
-          <List>
-            {
-              this.state.list.map((item, i) => (
-                <ListItem
-                  key={i}
-                  title={item.toSymbol}
-                  subtitle={"出来高:" + item.volume24h + "BTC"}
-                  avatar={{uri:"https://dummyimage.com/600x400/000/ffffff&text=" + (i+1) + "位"}}
-                />
-              ))
-            }
-          </List>
-        </ScrollView>
+        <Text
+          style={styles.h1}
+        >
+          仮想通貨24h出来高ランキング
+        </Text>
+        <List>
+          <ListView
+            renderRow={this.renderRow}
+            dataSource={this.state.dataSource}
+            enableEmptySections={true}
+            
+          />
+        </List>
 
         <Button
           raised
@@ -114,5 +123,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 20,
-  }
+    marginBottom: 100,
+  },
+  h1: {
+    fontSize: 30,
+  },
 });
