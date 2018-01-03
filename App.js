@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, ListView, Text, ActivityIndicator } from 'react-native';
-import { Avatar, Button, List, ListItem } from 'react-native-elements'
-import { Header, Body, Title, Footer, FooterTab, Icon, Container, Content } from 'native-base';
+import { Avatar, List, ListItem } from 'react-native-elements'
+import { Header, Body, Button, Title, Footer, FooterTab, Icon, Container, Content, Left, Right } from 'native-base';
 import cc from 'cryptocompare';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -79,11 +79,16 @@ export default class App extends React.Component {
 
     return (
       <Container>
-        {this.renderSpinner()}
         <Header>
+          <Left>
+            <Button transparent>
+              <Icon name='menu' />
+            </Button>
+          </Left>
           <Body>
-            <Title>仮想通貨24h出来高ランキング</Title>
+            <Title>出来高ランキング</Title>
           </Body>
+          <Right />
         </Header>
         <Content>
           <List>
@@ -95,15 +100,19 @@ export default class App extends React.Component {
             />
           </List>
         </Content>
-        <Button
-          raised
-          buttonStyle={{backgroundColor: color3, borderRadius: 1}}
-          onPress={() => {
-            this.allPairs();
-          }}
-          textStyle={{textAlign: 'center'}}
-          title={"更新"}
-        />
+        <Footer>
+          <FooterTab>
+            <Button
+              full
+              buttonStyle={{backgroundColor: color3, borderRadius: 1}}
+              onPress={() => {
+                this.allPairs();
+              }}
+            >
+              <Text style={styles.buttonText}>更新</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
       </Container>
     );
   }
@@ -111,5 +120,9 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+  },
+  buttonText: {
+    color: white,
+    fontSize: 15,
   }
 });
