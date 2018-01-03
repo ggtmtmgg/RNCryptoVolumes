@@ -22,7 +22,6 @@ export default class Currency extends React.Component {
     this.state = {
       isLoading: true,
       data: [],
-      symbol: 'USD',
     }
   }
 
@@ -32,13 +31,14 @@ export default class Currency extends React.Component {
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
     this.setState({ isLoading: false });
-    this.price();
   }
 
-  price() {
+  async componentWillReceiveProps(props) {
+    this.price(props.symbol);
+  }
+
+  price(symbol) {
     this.setState({ isLoading: true });
-    // let symbol = this.props.symbol;
-    let symbol = this.state.symbol;
     cc.priceFull('BTC', [symbol]).then(price => {
       if (price) {
         console.log(price.BTC[symbol]);
