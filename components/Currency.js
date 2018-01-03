@@ -24,6 +24,7 @@ export default class Currency extends React.Component {
   }
 
   async componentWillMount() {
+    Actions.refresh({title: this.props.symbol + '/BTC'})
     await Expo.Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
