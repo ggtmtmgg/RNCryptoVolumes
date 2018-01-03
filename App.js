@@ -16,20 +16,22 @@ const App = () => (
         animationEnabled={ true }
         hideTabBar={true}
       >
-        <Scene 
-            key='Ranking'
-            initial={ true } // 隣接するsceneで最初に表示される
-            component={Ranking}
-            tabBarLabel="ランキング"
-            hideNavBar={true}
-        />
+        <Scene>
+          <Scene
+              key='Ranking'
+              initial={ true } // 隣接するsceneで最初に表示される
+              component={Ranking}
+              tabBarLabel="ランキング"
+              hideNavBar={true}
+          />
+          <Scene key="Currency" component={Currency} title="通貨別取引詳細" />
+        </Scene>
         <Scene 
             key='PieChart'
             component={PieChart}
             tabBarLabel="円グラフ"
             hideNavBar={true}
         />
-        <Scene key="Currency" component={Currency} title="Currency" />
       </Tabs>
     </Router>
 );

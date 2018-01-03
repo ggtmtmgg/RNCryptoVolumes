@@ -9,8 +9,6 @@ import { Actions } from "react-native-router-flux";
 import StatusBarBackground from './StatusBarBackground'
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
-
-
 let Configs = require('../configs/Configs');
 // colors from https://coolors.co/0a2239-53a2be-1d84b5-132e32-176087
 const [color1, color2, color3, color4, color5, white] =
@@ -31,10 +29,7 @@ export default class Currency extends React.Component {
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
     this.setState({ isLoading: false });
-  }
-
-  async componentWillReceiveProps(props) {
-    this.price(props.symbol);
+    this.price(this.props.symbol);
   }
 
   price(symbol) {
@@ -54,7 +49,6 @@ export default class Currency extends React.Component {
         this.setState({
           data: data,
           isLoading: false,
-          /// dataSource: ds.cloneWithRows(price),
         }, function () {
           // do something with new state
         });
@@ -80,17 +74,6 @@ export default class Currency extends React.Component {
 
       <Container style={styles.container}>
         <StatusBarBackground />
-        <Header>
-          <Left>
-            <Button transparent onPress={() => Actions.pop()}>
-              <Text>{'<'}</Text>
-            </Button>
-          </Left>
-          <Body>
-            <Title>{this.props.symbol}/BTC</Title>
-          </Body>
-          <Right />
-        </Header>
         <Content padder>
           <Table>
             <Row data={['説明', 'データ']} style={styles.head} textStyle={styles.text}/>
