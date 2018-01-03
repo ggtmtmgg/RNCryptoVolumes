@@ -1,7 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, ListView, Text, View, ActivityIndicator } from 'react-native';
 import { Avatar, Button, List, ListItem } from 'react-native-elements'
-import Services from 'binancesdk';
 import cc from 'cryptocompare';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -15,7 +14,6 @@ const [color1, color2, color3, color4, color5, white] =
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.services = new Services(Configs);
     this.state = {
       isLoading: false,
       dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }).cloneWithRows([]),
@@ -49,33 +47,6 @@ export default class App extends React.Component {
       }
     })
     .catch(console.error)
-  }
-
-  allBookTickers() {
-    
-    let accountInfo = this.services.allBookTickers();
-    accountInfo.then((responseJson) => {
-      if (responseJson) {
-        console.log(responseJson.length);
-        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-        this.setState({
-          isLoading: false,
-          dataSource: ds.cloneWithRows(responseJson),
-        }, function () {
-          // do something with new state
-        });
-      } else {
-        this.setState({
-          isLoading: true
-        }, function () {
-          // do something with new state
-        });
-      }
-
-    })
-    .catch((error) => {
-      console.error(error);
-    });
   }
 
   renderRow (rowData, sectionID, rowID) {
