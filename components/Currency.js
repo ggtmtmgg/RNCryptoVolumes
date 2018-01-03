@@ -22,7 +22,7 @@ export default class Currency extends React.Component {
     this.state = {
       isLoading: true,
       data: [],
-      currencyName: 'BTC',
+      symbol: 'USD',
     }
   }
 
@@ -37,18 +37,19 @@ export default class Currency extends React.Component {
 
   price() {
     this.setState({ isLoading: true });
-    cc.priceFull(this.state.currencyName, ['JPY']).then(price => {
+    // let symbol = this.props.symbol;
+    let symbol = this.state.symbol;
+    cc.priceFull('BTC', [symbol]).then(price => {
       if (price) {
-        console.log(price[this.state.currencyName].JPY);
-        let currency = price[this.state.currencyName].JPY;
+        console.log(price.BTC[symbol]);
+        let currency = price.BTC[symbol];
         data = [
           ["シンボル", currency.FROMSYMBOL],
-          ["現在値", currency.PRICE],
-          ["時価総額", currency.MKTCAP],
-          ["24時間変化", currency.CHANGE24HOUR],
-          ["24時間最低値", currency.LOW24HOUR],
-          ["24時間最高値", currency.HIGH24HOUR],
-          ["24時間出来高", currency.TOTALVOLUME24HTO],
+          ["現在値", currency.PRICE + symbol],
+          ["24時間変化", currency.CHANGE24HOUR + symbol],
+          ["24時間最低値", currency.LOW24HOUR + symbol],
+          ["24時間最高値", currency.HIGH24HOUR + symbol],
+          ["24時間出来高", currency.TOTALVOLUME24HTO + symbol],
         ];
         this.setState({
           data: data,
@@ -86,7 +87,7 @@ export default class Currency extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>{this.state.currencyName}</Title>
+            <Title>{this.props.symbol}/BTC</Title>
           </Body>
           <Right />
         </Header>

@@ -55,6 +55,27 @@ export default class Ranking extends React.Component {
     .catch(console.error)
   }
 
+  price(symbol) {
+    cc.priceFull(symbol, ['JPY']).then(price => {
+      if (price) {
+        console.log(price[symbol].JPY);
+        let currency = price[symbol].JPY;
+        data = [
+          ["シンボル", currency.FROMSYMBOL],
+          ["現在値", currency.PRICE],
+          ["時価総額", currency.MKTCAP],
+          ["24時間変化", currency.CHANGE24HOUR],
+          ["24時間最低値", currency.LOW24HOUR],
+          ["24時間最高値", currency.HIGH24HOUR],
+          ["24時間出来高", currency.TOTALVOLUME24HTO],
+        ];
+        Actions.Currency({data: data, symbol: symbol});
+      } else {
+      }
+    })
+    .catch(console.error)
+  }
+
   renderRow (rowData, sectionID, rowID) {
     // console.log(rowData);
     return (
@@ -68,7 +89,9 @@ export default class Ranking extends React.Component {
           title={(parseInt(rowID)+1) + '位'}
           activeOpacity={0.7}
         />}
-        onPress={() => { Actions.Currency() }}
+        onPress={() => {
+          Actions.Currency({symbol: rowData.toSymbol});
+        }}
       />
     )
   }
