@@ -56,7 +56,7 @@ export default class Ranking extends React.Component {
   }
 
   renderRow (rowData, sectionID, rowID) {
-    console.log(rowData);
+    // console.log(rowData);
     return (
       <ListItem
         key={sectionID}
@@ -68,6 +68,7 @@ export default class Ranking extends React.Component {
           title={(parseInt(rowID)+1) + '位'}
           activeOpacity={0.7}
         />}
+        onPress={() => { Actions.Currency() }}
       />
     )
   }
@@ -97,8 +98,6 @@ export default class Ranking extends React.Component {
           </Button>
         </Segment>
         <Content padder>
-          <Button onPress={() => { Actions.Currency() }}><Text>currency</Text></Button>
-
           <List>
             <ListView
               renderRow={this.renderRow}

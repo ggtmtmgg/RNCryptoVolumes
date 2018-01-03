@@ -14,6 +14,7 @@ const App = () => (
         key='main'
         swipeEnabled={ true }
         animationEnabled={ true }
+        hideTabBar={true}
       >
         <Scene 
             key='Ranking'
@@ -21,15 +22,14 @@ const App = () => (
             component={Ranking}
             tabBarLabel="ランキング"
             hideNavBar={true}
-        >
-          <Scene tabs key="Currency" component={Currency} title="Currency" />
-        </Scene>
+        />
         <Scene 
             key='PieChart'
             component={PieChart}
             tabBarLabel="円グラフ"
             hideNavBar={true}
         />
+        <Scene key="Currency" component={Currency} title="Currency" />
       </Tabs>
     </Router>
 );

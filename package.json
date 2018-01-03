@@ -28,6 +28,7 @@
     "react-native-elements": "^0.18.5",
     "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-pathjs-charts": "^0.0.33",
-    "react-native-router-flux": "^4.0.0-beta.25"
+    "react-native-router-flux": "^4.0.0-beta.25",
+    "react-native-table-component": "^1.1.3"
   }
 }
