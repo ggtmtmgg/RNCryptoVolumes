@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, ListView, Text, View, ActivityIndicator } from 'react-native';
-import { Button, List, ListItem } from 'react-native-elements'
+import { Avatar, Button, List, ListItem } from 'react-native-elements'
 import Services from 'binancesdk';
 import cc from 'cryptocompare';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -85,7 +85,13 @@ export default class App extends React.Component {
         key={sectionID}
         title={rowData.toSymbol}
         subtitle={"出来高:" + rowData.volume24h + "BTC"}
-        avatar={{uri:"https://dummyimage.com/600x400/000/ffffff&text=" + (parseInt(rowID)+1) + "位"}}
+        avatar={<Avatar
+          small
+          rounded
+          title={(parseInt(rowID)+1) + '位'}
+          color={color2}
+          activeOpacity={0.7}
+        />}
       />
     )
   }
