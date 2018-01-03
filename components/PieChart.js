@@ -19,16 +19,7 @@ export default class PieChart extends React.Component {
       isLoading: true,
       dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }).cloneWithRows([]),
 
-      pieData: [{
-          "name": "BTC",
-          "population": 7694980
-        }, {
-          "name": "ETH",
-          "population": 2584160
-        }, {
-          "name": "TRIG",
-          "population": 6590667
-        }
+      pieData: [
       ],
     }
   }
@@ -47,10 +38,14 @@ export default class PieChart extends React.Component {
     cc.topPairs('BTC', 50).then(pairs => {
       if (pairs) {
         // console.log(pairs);
-        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.setState({
           isLoading: false,
-          dataSource: ds.cloneWithRows(pairs),
+          pieData: pairs.map(function(pair){
+            return {
+              "name": pair.toSymbol,
+              "volume24h": pair.volume24h,
+            }
+          }),
         }, function () {
           // do something with new state
         });
@@ -74,17 +69,6 @@ export default class PieChart extends React.Component {
 
     return (
       <Container>
-        <Header hasTabs style={styles.header}>
-          <Left>
-            <Button transparent>
-              <Icon name='menu' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>円グラフ</Title>
-          </Body>
-          <Right />
-        </Header>
         <Segment>
           <Button
             first
@@ -104,7 +88,7 @@ export default class PieChart extends React.Component {
             data={this.state.pieData}
             options={pieOptions}
             style={styles.pie}
-            accessorKey="population" />
+            accessorKey="volume24h" />
         </Content>
         <Button
           full
@@ -122,8 +106,6 @@ export default class PieChart extends React.Component {
 
 
 const styles = StyleSheet.create({
-  header: {
-  },
   buttonText: {
     color: white,
     fontSize: 15,

@@ -79,17 +79,6 @@ export default class Ranking extends React.Component {
 
     return (
       <Container>
-        <Header hasTabs style={styles.header}>
-          <Left>
-            <Button transparent>
-              <Icon name='menu' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>出来高</Title>
-          </Body>
-          <Right />
-        </Header>
         <Segment>
           <Button
             first
@@ -131,8 +120,6 @@ export default class Ranking extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  header: {
-  },
   buttonText: {
     color: white,
     fontSize: 15,

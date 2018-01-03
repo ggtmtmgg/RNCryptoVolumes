@@ -15,6 +15,7 @@ const App = () => (
         key='main'
         swipeEnabled={ true }
         animationEnabled={ true }
+        hideTabBar
       >
         <Scene 
             key='Ranking'
