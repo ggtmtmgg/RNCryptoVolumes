@@ -57,7 +57,7 @@ export default class App extends React.Component {
         title={rowData.toSymbol}
         subtitle={"出来高:" + rowData.volume24h + "BTC"}
         avatar={<Avatar
-          small
+          medium
           rounded
           title={(parseInt(rowID)+1) + '位'}
           color={color2}
