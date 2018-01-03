@@ -6,6 +6,7 @@ import cc from 'cryptocompare';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Actions } from "react-native-router-flux";
 import { Pie } from 'react-native-pathjs-charts';
+import StatusBarBackground from './StatusBarBackground'
 
 let Configs = require('../configs/Configs');
 // colors from https://coolors.co/0a2239-53a2be-1d84b5-132e32-176087
@@ -69,6 +70,7 @@ export default class PieChart extends React.Component {
 
     return (
       <Container>
+        <StatusBarBackground />
         <Segment>
           <Button
             first

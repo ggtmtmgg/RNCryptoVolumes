@@ -1,11 +1,13 @@
 import React from 'react';
-import { ScrollView, StyleSheet, ListView, Text, ActivityIndicator } from 'react-native';
+import { View, ScrollView, StyleSheet, ListView, Text, ActivityIndicator } from 'react-native';
 import { Avatar, List, ListItem } from 'react-native-elements'
 import { Header, Body, Button, Title, Footer, FooterTab, Icon, Container, Content, Left, Right, Segment } from 'native-base';
 import cc from 'cryptocompare';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Scene, Router } from 'react-native-router-flux';
 import { Actions } from "react-native-router-flux";
+import StatusBarBackground from './StatusBarBackground'
+
 
 let Configs = require('../configs/Configs');
 // colors from https://coolors.co/0a2239-53a2be-1d84b5-132e32-176087
@@ -79,6 +81,7 @@ export default class Ranking extends React.Component {
 
     return (
       <Container>
+        <StatusBarBackground />
         <Segment>
           <Button
             first
