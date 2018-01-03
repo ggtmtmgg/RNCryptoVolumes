@@ -89,7 +89,7 @@ export default class App extends React.Component {
 
         <Button
           raised
-          buttonStyle={{backgroundColor: color3, borderRadius: 10}}
+          buttonStyle={{backgroundColor: color3, borderRadius: 1}}
           onPress={() => {
             this.allPairs();
           }}
