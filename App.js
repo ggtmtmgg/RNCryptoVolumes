@@ -6,6 +6,11 @@ import cc from 'cryptocompare';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 let Configs = require('./configs/Configs');
+// colors from https://coolors.co/0a2239-53a2be-1d84b5-132e32-176087
+const [color1, color2, color3, color4, color5, white] =
+  ["#0A2239", "#53A2BE", "#1D84B5", "#132E32", "#176087", "#FFFFFF"];
+
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -89,7 +94,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Spinner visible={this.state.isLoading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+        <Spinner visible={this.state.isLoading} textContent={"読み込み中..."} textStyle={{color: white}} overlayColor={color2} />
 
         <Text
           style={styles.h1}
@@ -107,7 +112,7 @@ export default class App extends React.Component {
 
         <Button
           raised
-          buttonStyle={{backgroundColor: 'green', borderRadius: 10}}
+          buttonStyle={{backgroundColor: color3, borderRadius: 10}}
           onPress={() => {
             this.allPairs();
           }}
