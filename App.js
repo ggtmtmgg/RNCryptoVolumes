@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, ListView, Text, ActivityIndicator } from 'react-native';
 import { Avatar, List, ListItem } from 'react-native-elements'
-import { Header, Body, Button, Title, Footer, FooterTab, Icon, Container, Content, Left, Right } from 'native-base';
+import { Header, Body, Button, Title, Footer, FooterTab, Icon, Container, Content, Left, Right, Segment } from 'native-base';
 import cc from 'cryptocompare';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -54,6 +54,7 @@ export default class App extends React.Component {
   }
 
   renderRow (rowData, sectionID, rowID) {
+    console.log(rowData);
     return (
       <ListItem
         key={sectionID}
@@ -63,7 +64,6 @@ export default class App extends React.Component {
           medium
           rounded
           title={(parseInt(rowID)+1) + '位'}
-          color={color2}
           activeOpacity={0.7}
         />}
       />
@@ -79,18 +79,26 @@ export default class App extends React.Component {
 
     return (
       <Container>
-        <Header>
+        <Header hasTabs style={styles.header}>
           <Left>
             <Button transparent>
               <Icon name='menu' />
             </Button>
           </Left>
           <Body>
-            <Title>出来高ランキング</Title>
+            <Title>出来高</Title>
           </Body>
           <Right />
         </Header>
-        <Content>
+        <Segment>
+          <Button first>
+            <Text style={styles.tabButtonText}>ランキング</Text>
+          </Button>
+          <Button last active>
+            <Text style={styles.tabButtonText}>円グラフ</Text>
+          </Button>
+        </Segment>
+        <Content padder>
           <List>
             <ListView
               renderRow={this.renderRow}
@@ -100,26 +108,22 @@ export default class App extends React.Component {
             />
           </List>
         </Content>
-        <Footer>
-          <FooterTab>
-            <Button
-              full
-              buttonStyle={{backgroundColor: color3, borderRadius: 1}}
-              onPress={() => {
-                this.allPairs();
-              }}
-            >
-              <Text style={styles.buttonText}>更新</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
+        <Button
+          full
+          style={{backgroundColor: color3}}
+          onPress={() => {
+            this.allPairs();
+          }}
+        >
+          <Text style={styles.buttonText}>更新</Text>
+        </Button>
       </Container>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  header: {
   },
   buttonText: {
     color: white,
