@@ -1,5 +1,10 @@
 {
   "expo": {
-    "sdkVersion": "23.0.0"
+    "name": "Crypto Volumes",
+    "slug": "crypto-volumes",
+    "sdkVersion": "23.0.0",
+    "privacy": "public",
+    "githubUrl": "https://github.com/ggtmtmgg/RNCryptoVolumes",
+    "icon": "https://dummyimage.com/1024x1024/53a1be/ffffff.png&text=Crypto+Volumes"
   }
 }
